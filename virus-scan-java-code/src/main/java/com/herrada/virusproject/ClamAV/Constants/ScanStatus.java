@@ -1,4 +1,4 @@
-package com.example.messagingredis.ClamAV.Constants;
+package com.herrada.virusproject.ClamAV.Constants;
 
 public enum ScanStatus {
     IN_QUEUE,

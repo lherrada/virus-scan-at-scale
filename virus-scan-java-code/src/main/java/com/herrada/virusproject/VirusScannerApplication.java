@@ -1,8 +1,8 @@
-package com.example.messagingredis;
+package com.herrada.virusproject;
 
-import com.example.messagingredis.Services.ScanService;
-import com.example.messagingredis.Services.TaskQueueService;
-import com.example.messagingredis.Listener.WorkerThread;
+import com.herrada.virusproject.Services.ScanService;
+import com.herrada.virusproject.Services.TaskQueueService;
+import com.herrada.virusproject.Listener.WorkerThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,9 +17,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @SpringBootApplication
 @EnableCaching
 public class
-MessagingRedisApplication implements CommandLineRunner {
+VirusScannerApplication implements CommandLineRunner {
 	public static void main(String[] args) throws  InterruptedException {
-		SpringApplication.run(MessagingRedisApplication.class, args);
+		SpringApplication.run(VirusScannerApplication.class, args);
 
 		while (true)
 		  Thread.sleep(500L);

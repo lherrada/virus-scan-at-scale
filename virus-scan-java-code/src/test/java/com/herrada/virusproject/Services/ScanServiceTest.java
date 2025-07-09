@@ -1,11 +1,11 @@
-package com.example.messagingredis.Services;
+package com.herrada.virusproject.Services;
 
 
-import com.example.messagingredis.ClamAV.ClamavClient;
-import com.example.messagingredis.ClamAV.Constants.ScanResult;
-import com.example.messagingredis.ClamAV.Constants.ScanStatus;
-import com.example.messagingredis.ClamAV.ScanRequest;
-import com.example.messagingredis.ClamAV.ScanResultInfo;
+import com.herrada.virusproject.ClamAV.ClamavClient;
+import com.herrada.virusproject.ClamAV.Constants.ScanResult;
+import com.herrada.virusproject.ClamAV.Constants.ScanStatus;
+import com.herrada.virusproject.ClamAV.ScanRequest;
+import com.herrada.virusproject.ClamAV.ScanResultInfo;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;

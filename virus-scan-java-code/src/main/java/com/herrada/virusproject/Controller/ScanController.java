@@ -1,11 +1,11 @@
-package com.example.messagingredis.Controller;
+package com.herrada.virusproject.Controller;
 
 
-import com.example.messagingredis.ClamAV.Constants.ScanResult;
-import com.example.messagingredis.ClamAV.Constants.ScanStatus;
-import com.example.messagingredis.ClamAV.ScanResultInfo;
-import com.example.messagingredis.Keys.CustomKeyGenerator;
-import com.example.messagingredis.Services.ScanService;
+import com.herrada.virusproject.ClamAV.Constants.ScanResult;
+import com.herrada.virusproject.ClamAV.Constants.ScanStatus;
+import com.herrada.virusproject.ClamAV.ScanResultInfo;
+import com.herrada.virusproject.Keys.CustomKeyGenerator;
+import com.herrada.virusproject.Services.ScanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

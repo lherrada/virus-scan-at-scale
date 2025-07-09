@@ -1,9 +1,9 @@
-package com.example.messagingredis.Listener;
+package com.herrada.virusproject.Listener;
 
-import com.example.messagingredis.ClamAV.ScanRequest;
-import com.example.messagingredis.ClamAV.ScanResultInfo;
-import com.example.messagingredis.Services.ScanService;
-import com.example.messagingredis.Services.TaskQueueService;
+import com.herrada.virusproject.ClamAV.ScanRequest;
+import com.herrada.virusproject.ClamAV.ScanResultInfo;
+import com.herrada.virusproject.Services.ScanService;
+import com.herrada.virusproject.Services.TaskQueueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

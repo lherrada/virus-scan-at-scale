@@ -1,9 +1,9 @@
-package com.example.messagingredis.Config;
+package com.herrada.virusproject.Config;
 
-import com.example.messagingredis.ClamAV.ClamavClient;
-import com.example.messagingredis.ClamAV.ScanRequest;
-import com.example.messagingredis.ClamAV.ScanResultInfo;
-import com.example.messagingredis.Keys.CustomKeyGenerator;
+import com.herrada.virusproject.ClamAV.ClamavClient;
+import com.herrada.virusproject.ClamAV.ScanRequest;
+import com.herrada.virusproject.ClamAV.ScanResultInfo;
+import com.herrada.virusproject.Keys.CustomKeyGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
@@ -92,7 +92,8 @@ public class AppConfig {
         return new CustomKeyGenerator();
     }
 
-    /*Using Java-based caching when running unit tests.
+    /*
+    Using Java-based caching libs when running unit tests.
      Not required to use redis cache for this test.
      */
     @Bean

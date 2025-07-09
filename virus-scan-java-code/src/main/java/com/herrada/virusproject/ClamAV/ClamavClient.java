@@ -1,6 +1,6 @@
-package com.example.messagingredis.ClamAV;
-import com.example.messagingredis.ClamAV.Constants.ScanResult;
-import com.example.messagingredis.ClamAV.Constants.ScanStatus;
+package com.herrada.virusproject.ClamAV;
+import com.herrada.virusproject.ClamAV.Constants.ScanResult;
+import com.herrada.virusproject.ClamAV.Constants.ScanStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

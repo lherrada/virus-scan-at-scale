@@ -1,4 +1,4 @@
-package com.example.messagingredis.Keys;
+package com.herrada.virusproject.Keys;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

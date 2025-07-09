@@ -1,7 +1,7 @@
-package com.example.messagingredis.ClamAV;
+package com.herrada.virusproject.ClamAV;
 
-import com.example.messagingredis.ClamAV.Constants.ScanResult;
-import com.example.messagingredis.ClamAV.Constants.ScanStatus;
+import com.herrada.virusproject.ClamAV.Constants.ScanResult;
+import com.herrada.virusproject.ClamAV.Constants.ScanStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

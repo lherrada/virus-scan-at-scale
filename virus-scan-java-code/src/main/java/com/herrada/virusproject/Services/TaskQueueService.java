@@ -1,6 +1,6 @@
-package com.example.messagingredis.Services;
+package com.herrada.virusproject.Services;
 
-import com.example.messagingredis.ClamAV.ScanRequest;
+import com.herrada.virusproject.ClamAV.ScanRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;

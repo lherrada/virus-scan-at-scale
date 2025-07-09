@@ -1,4 +1,4 @@
-package com.example.messagingredis.ClamAV;
+package com.herrada.virusproject.ClamAV;
 
 import lombok.*;
 
