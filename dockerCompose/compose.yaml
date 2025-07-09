@@ -1,0 +1,38 @@
+services:
+   clamav:
+     environment:
+       - CLAMAV_NO_FRESHCLAMD=true
+     build:
+       context: ./clamav
+     volumes:
+      - clamavsocket:/home/clamav/socket
+     healthcheck:
+       test: ["CMD-SHELL","bash /usr/local/bin/clamdcheck.sh"]
+
+   redis:
+     depends_on:
+       clamav:
+         condition: service_healthy
+     healthcheck:
+       test: ["CMD-SHELL", "redis-cli", "ping"]  
+     build:
+      context: ./redis
+     ports:
+       - 6379:6379
+
+   virusapp:
+     depends_on:
+       redis:
+         condition: service_healthy
+     environment:
+       ENV_APP: docker 
+     build:
+       context: ./virusapp	
+     volumes:
+       - clamavsocket:/tmp
+     ports:
+       - 8080:8080
+
+
+volumes:
+  clamavsocket: {}
