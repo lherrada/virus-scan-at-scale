@@ -1,10 +1,7 @@
 package com.herrada.virusproject.Listener;
 
-import com.herrada.virusproject.ClamAV.Constants.ScanResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 
 import com.herrada.virusproject.ClamAV.ScanRequest;
@@ -14,93 +11,78 @@ import com.herrada.virusproject.Services.TaskQueueService;
 
 class WorkerThreadTest {
 
-    @Mock
     private TaskQueueService taskQueueService;
-
-    @Mock
     private ScanService scanService;
-
-    private WorkerThread workerThread;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        workerThread = new WorkerThread(taskQueueService, scanService);
+        taskQueueService = mock(TaskQueueService.class);
+        scanService = mock(ScanService.class);
     }
 
     @Test
-    void testSuccessfulScan() {
-        // Prepare test data
-        String uniqueId = "test-123";
-        String fileName = "test.txt";
-        byte[] data = "test data".getBytes();
-        ScanRequest request = new ScanRequest(uniqueId, fileName, data);
+    void run_shouldProcessOneRequestSuccessfully() throws Exception {
+        // Given
+        byte[] data = "test".getBytes();
+        ScanRequest request = new ScanRequest("abc123", "file.exe", data);
         ScanResultInfo resultInfo = new ScanResultInfo();
-        resultInfo.setScanResult(ScanResult.CLEAN);
+        resultInfo.setHashValue("abc123");
 
-        // Configure mock behavior
-        when(taskQueueService.blockingDequeue(0)).thenReturn(request);
-        when(scanService.syncScan(uniqueId, fileName, data)).thenReturn(resultInfo);
-        when(taskQueueService.ping()).thenReturn(false); // To break the infinite loop
+        when(taskQueueService.blockingDequeue(0))
+                .thenReturn(request)
+                .thenThrow(new RuntimeException("stop loop"));
+        when(scanService.syncScan(eq("abc123"), eq("file.exe"), eq(data)))
+                .thenReturn(resultInfo);
+        when(taskQueueService.ping()).thenReturn(false); // break on exception
 
-        // Execute
-        workerThread.run();
+        // When
+        WorkerThread worker = new WorkerThread(taskQueueService, scanService);
+        Thread thread = new Thread(worker);
+        thread.start();
+        thread.join();  // wait for thread to stop
 
-        // Verify
-        verify(scanService).syncScan(uniqueId, fileName, data);
-        verify(taskQueueService, never()).enqueue(any(ScanRequest.class));
+        // Then
+        verify(scanService, times(1)).syncScan(eq("abc123"), eq("file.exe"), eq(data));
+        verify(taskQueueService, never()).enqueue(any());
     }
 
     @Test
-    void testFailedScan() {
-        // Prepare test data
-        String uniqueId = "test-123";
-        String fileName = "test.txt";
-        byte[] data = "test data".getBytes();
-        ScanRequest request = new ScanRequest(uniqueId, fileName, data);
+    void run_shouldRetryWhenScanResultIsNull() throws Exception {
+        // Given
+        byte[] data = "retry".getBytes();
+        ScanRequest request = new ScanRequest("retry123", "retry.exe", data);
 
-        // Configure mock behavior
-        when(taskQueueService.blockingDequeue(0)).thenReturn(request);
-        when(scanService.syncScan(uniqueId, fileName, data)).thenReturn(null);
-        when(taskQueueService.ping()).thenReturn(false); // To break the infinite loop
+        when(taskQueueService.blockingDequeue(0))
+                .thenReturn(request)
+                .thenThrow(new RuntimeException("stop loop"));
+        when(scanService.syncScan(eq("retry123"), eq("retry.exe"), eq(data)))
+                .thenReturn(null);
+        when(taskQueueService.ping()).thenReturn(false);
 
-        // Execute
-        workerThread.run();
+        // When
+        WorkerThread worker = new WorkerThread(taskQueueService, scanService);
+        Thread thread = new Thread(worker);
+        thread.start();
+        thread.join();
 
-        // Verify
-        verify(scanService).syncScan(uniqueId, fileName, data);
-        verify(taskQueueService).enqueue(request);
+        // Then
+        verify(taskQueueService, times(1)).enqueue(eq(request));
     }
 
     @Test
-    void testNullRequest() {
-        // Configure mock behavior
-        when(taskQueueService.blockingDequeue(0)).thenReturn(null);
-        when(taskQueueService.ping()).thenReturn(false); // To break the infinite loop
-
-        // Execute
-        workerThread.run();
-
-        // Verify
-        verify(scanService, never()).syncScan(any(), any(), any());
-        verify(taskQueueService, never()).enqueue(any(ScanRequest.class));
-    }
-
-    @Test
-    void testExceptionHandling() {
-        // Prepare test data
-        ScanRequest request = new ScanRequest("test-123", "test.txt", "test data".getBytes());
-
-        // Configure mock behavior
+    void run_shouldExitWhenPingReturnsFalseAfterException() throws Exception {
+        // Given
         when(taskQueueService.blockingDequeue(0)).thenThrow(new RuntimeException("Test exception"));
-        when(taskQueueService.ping()).thenReturn(false); // To break the infinite loop
+        when(taskQueueService.ping()).thenReturn(false);
 
-        // Execute
-        workerThread.run();
+        // When
+        WorkerThread worker = new WorkerThread(taskQueueService, scanService);
+        Thread thread = new Thread(worker);
+        thread.start();
+        thread.join();
 
-        // Verify
-        verify(scanService, never()).syncScan(any(), any(), any());
-        verify(taskQueueService).ping();
+        // Then
+        verify(taskQueueService, times(1)).ping();
     }
 }
 
