@@ -7,7 +7,7 @@ services:
      volumes:
       - clamavsocket:/home/clamav/socket
      healthcheck:
-       test: ["CMD-SHELL","bash /usr/local/bin/clamdcheck.sh"]
+       test: ["CMD-SHELL","bash /home/clamav/clamdcheck.sh"]
 
    redis:
      depends_on:
