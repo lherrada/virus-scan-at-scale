@@ -68,7 +68,7 @@ public class AppConfig {
     }
 
     @Bean
-    @Profile({"prod","docker"})
+    @Profile({"prod","docker","minikube"})
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         Jackson2JsonRedisSerializer<ScanResultInfo> jsonSerializer =
                 new Jackson2JsonRedisSerializer<>(ScanResultInfo.class);
