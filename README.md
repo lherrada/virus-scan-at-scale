@@ -1,6 +1,6 @@
 # Virus-scan-at-scale
-Current project implemented in java language, a system that scans files for virus detection.
-This system design is meant to handle thousands of files in parallel for virus scan.
+Current project implemented in java language is a system that scans files for virus detection.
+This system is designed to handle thousands of files in parallel for virus scan.
 
 We worked on two approaches:
 1. Synchronous scan.
