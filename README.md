@@ -10,7 +10,7 @@ We worked on two approaches:
 <p align="left">
 On this approach, the external user sends the scan request and waits for the result.
 It makes use of a caching layer to memorize the result of a scan request. 
-In this way, we avoid scanning the same file content twice. Take into account that file
+In this way, we avoid scanning the same file content several times. Take into account that file
 scanning for virus is an expensive operation.  
 </p>
 We have two different call flows, depending on whether we have a cache hit or miss.
